@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 export default function Home() {
   const [isLuck, setIsLuck] = useState(false);
   return (
-    <main>
+    <main className="border-4">
       <nav className="flex gap-6">
         <button onClick={() => setIsLuck(true)}>luck</button>
         <button onClick={() => setIsLuck(false)}>sence</button>

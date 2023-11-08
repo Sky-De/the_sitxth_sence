@@ -22,6 +22,8 @@ const Game = (props: GameProps) => {
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
 
   const handleResetGame = () => {
+    const click = new Audio("./click.wav");
+    click.play();
     setAngle(AngleInit);
     setLives(LivesInit);
     setScore(ScoreInit);
@@ -39,13 +41,19 @@ const Game = (props: GameProps) => {
       (e.currentTarget.name === "B" && random[1] === 1) ||
       (e.currentTarget.name === "C" && random[2] === 1)
     ) {
+      const correct = new Audio("./correct.wav");
+      correct.play();
       setScore(score + ScoreStep);
       setAngle(angle + AngleStep);
     } else {
       setAngle(angle - 60);
       if (lives > 1) {
+        const incorrect = new Audio("./incorrect.wav");
+        incorrect.play();
         setLives(lives - LivesStep);
       } else {
+        const gameOver = new Audio("./game_over.wav");
+        gameOver.play();
         setLives(0);
         setIsGameOver(true);
       }
@@ -57,7 +65,18 @@ const Game = (props: GameProps) => {
   }, [props.type]);
 
   return (
-    <section className="w-screen h-screen border relative flex flex-col items-center justify-center">
+    <section className=" h-screen relative flex flex-col items-center justify-center">
+      {isGameOver && (
+        <div className="absolute top-0 z-10 backdrop-blur-sm bg-transparent  w-full h-full p-8">
+          <div className="bg-black text-white w-fit m-auto p-5">
+            <h2>GameOver</h2>
+            <p>Your score : {score}</p>
+            <button className="border w-full mt-4" onClick={handleResetGame}>
+              reset
+            </button>
+          </div>
+        </div>
+      )}
       <ul
         style={{ transform: `rotate(${angle}deg)` }}
         className={`h-[11rem] w-[12rem] flex justify-between transition-transform duration-1000 origin-center`}
