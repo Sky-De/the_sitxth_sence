@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GameBtn } from "./GameBtn";
 import { generateSecureRandom } from "@/hooks/useRandom";
 
@@ -41,7 +41,6 @@ const Game = (props: GameProps) => {
     ) {
       setScore(score + ScoreStep);
       setAngle(angle + AngleStep);
-      //   e.currentTarget.style.color = "red";
     } else {
       setAngle(angle - 60);
       if (lives > 1) {
@@ -53,12 +52,15 @@ const Game = (props: GameProps) => {
     }
   };
 
+  useEffect(() => {
+    handleResetGame();
+  }, [props.type]);
+
   return (
-    <section className="w-screen h-screen border grid place-content-center ">
-      {isGameOver && <h1>Game Over</h1>}
+    <section className="w-screen h-screen border relative flex flex-col items-center justify-center">
       <ul
         style={{ transform: `rotate(${angle}deg)` }}
-        className={` h-[12rem] w-[13rem] flex justify-between origin-center transition-transform duration-1000 rounded-full drop-shadow-md`}
+        className={`h-[11rem] w-[12rem] flex justify-between transition-transform duration-1000 origin-center`}
       >
         <GameBtn
           disabled={isGameOver}
@@ -79,11 +81,15 @@ const Game = (props: GameProps) => {
           className="self-end apply_btn_style"
         />
       </ul>
-      <h2>LIVES {lives}</h2>
-      <h2>SCORE {score}</h2>
-      <button className="mt-20" onClick={handleResetGame}>
-        reset
-      </button>
+      <div className="info mt-20">
+        <h2>{}</h2>
+        <h2>LIVES {lives}</h2>
+        <h2>SCORE {score}</h2>
+        <button onClick={handleResetGame}>reset</button>
+        <h1 className={` ${isGameOver ? "opacity-100" : "opacity-0"}`}>
+          Game Over
+        </h1>
+      </div>
     </section>
   );
 };

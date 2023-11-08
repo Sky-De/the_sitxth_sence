@@ -3,5 +3,17 @@
 @tailwind utilities;
 
 .apply_btn_style {
-  @apply border p-2 py-3 rounded-full bg-gray-400;
+  @apply border p-5 py-3 rounded-full bg-gray-400;
+}
+.apply_after::after {
+  position: absolute;
+  content: "";
+  width: 1px;
+  height: 1px;
+  border-radius: 50%;
+  background: #000;
+  border: 1px solid red;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
 }
