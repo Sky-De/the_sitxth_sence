@@ -85,19 +85,19 @@ const Game = (props: GameProps) => {
           disabled={isGameOver}
           name="A"
           onClick={handleClick}
-          className="self-end apply_btn_style"
+          className="self-end apply_btn_style btn_bg"
         />
         <GameBtn
           disabled={isGameOver}
           name="B"
           onClick={handleClick}
-          className="self-start apply_btn_style"
+          className="self-start apply_btn_style btn_bg"
         />
         <GameBtn
           disabled={isGameOver}
           name="C"
           onClick={handleClick}
-          className="self-end apply_btn_style"
+          className="self-end apply_btn_style btn_bg"
         />
       </ul>
       <div className="info mt-20">

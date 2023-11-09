@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .apply_btn_style {
-  @apply border p-5 py-3 rounded-full bg-gray-400;
+  @apply border min-w-[60px] w-[60px] max-h-[60px] h-[60px]  bg-gray-400 rounded-full;
 }
 .apply_after::after {
   position: absolute;
@@ -16,4 +16,18 @@
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
+}
+
+.btn_bg {
+  background-image: url("../public/wave.png");
+  background-position-x: 0px;
+  animation: bgWave 2s infinite ease;
+}
+@keyframes bgWave {
+  0% {
+    background-position-x: 0px;
+  }
+  100% {
+    background-position-x: 1860px;
+  }
 }
