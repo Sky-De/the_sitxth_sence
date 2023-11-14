@@ -1,4 +1,6 @@
-import wave from "@/public/wave.png";
+import wave1 from "@/public/wave1.png";
+import wave2 from "@/public/wave2.png";
+import wave3 from "@/public/wave3.png";
 
 interface TargetClassProps {
   canvas: HTMLElement | null;
@@ -25,14 +27,17 @@ export default class Target {
 
   private loadImage() {
     const imageLoader = new Image();
-    imageLoader.src = wave.src;
+    if (this.type === "A") imageLoader.src = wave1.src;
+    if (this.type === "B") imageLoader.src = wave2.src;
+    if (this.type === "C") imageLoader.src = wave3.src;
+
     imageLoader.onload = () => {
       this.image = imageLoader;
     };
   }
 
   update(deltaTime: number) {
-    if (this.frameX > 29) return (this.frameX = 0);
+    if (this.frameX > 27) return (this.frameX = 0);
     this.frameX++;
   }
 
