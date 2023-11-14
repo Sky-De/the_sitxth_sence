@@ -32,7 +32,9 @@ const Game = (props: GameProps) => {
     setScore(ScoreInit);
     setIsGameOver(false);
   };
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (
+    e: React.MouseEvent<HTMLCanvasElement | HTMLButtonElement>
+  ) => {
     console.log(props.type);
 
     setCount(count + 1);
@@ -100,9 +102,10 @@ const Game = (props: GameProps) => {
       target_2.draw(ctx2);
       target_1.update(deltaTime);
       target_2.update(deltaTime);
+      // requestAnimationFrame(animate);
       requestAnimationFrame(animate);
     }
-    animate();
+    animate(requestAnimationFrame((timeStamp) => timeStamp));
   }, []);
 
   return (
