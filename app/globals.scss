@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  background: rgba(149, 255, 0, 0);
+}
 .apply_btn_style {
   @apply border min-w-[60px] w-[60px] max-h-[60px] h-[60px]  bg-gray-400 rounded-full;
 }
@@ -23,11 +26,11 @@
   background-position-x: 0px;
   animation: bgWave 2s infinite ease;
 }
-@keyframes bgWave {
-  0% {
-    background-position-x: 0px;
-  }
-  100% {
-    background-position-x: 1860px;
-  }
-}
+// @keyframes bgWave {
+//   0% {
+//     background-position-x: 0px;
+//   }
+//   100% {
+//     background-position-x: 1860px;
+//   }
+// }

@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { GameBtn } from "./GameBtn";
+import React, { useState, useEffect, useRef } from "react";
 import { generateSecureRandom } from "@/hooks/useRandom";
+import Target from "./Target";
 
 type GameProps = {
   type: "luck" | "sense";
@@ -20,6 +20,9 @@ const Game = (props: GameProps) => {
   const [lives, setLives] = useState<number>(LivesInit);
   const [angle, setAngle] = useState<number>(AngleInit);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
+  const target1_ref = useRef<HTMLCanvasElement | null>(null);
+  const target2_ref = useRef<HTMLCanvasElement | null>(null);
+  const target3_ref = useRef<HTMLCanvasElement | null>(null);
 
   const handleResetGame = () => {
     const click = new Audio("./click.wav");
@@ -37,9 +40,9 @@ const Game = (props: GameProps) => {
     console.log(random);
 
     if (
-      (e.currentTarget.name === "A" && random[0] === 1) ||
-      (e.currentTarget.name === "B" && random[1] === 1) ||
-      (e.currentTarget.name === "C" && random[2] === 1)
+      (e.currentTarget.id === "target_1" && random[0] === 1) ||
+      (e.currentTarget.id === "target_2" && random[1] === 1) ||
+      (e.currentTarget.id === "target_3" && random[2] === 1)
     ) {
       const correct = new Audio("./correct.wav");
       correct.play();
@@ -64,6 +67,44 @@ const Game = (props: GameProps) => {
     handleResetGame();
   }, [props.type]);
 
+  useEffect(() => {
+    const target_3 = new Target({
+      canvas: document.getElementById("target_3"),
+      type: "C",
+    });
+    const target_1 = new Target({
+      canvas: document.getElementById("target_1"),
+      type: "A",
+    });
+    const target_2 = new Target({
+      canvas: document.getElementById("target_2"),
+      type: "B",
+    });
+
+    const ctx3 = (target1_ref.current as HTMLCanvasElement).getContext("2d");
+    const ctx1 = (target2_ref.current as HTMLCanvasElement).getContext("2d");
+    const ctx2 = (target3_ref.current as HTMLCanvasElement).getContext("2d");
+    let lastTime = 0;
+    function animate(timeStamp: number) {
+      let deltaTime = timeStamp - lastTime;
+      deltaTime = deltaTime ? deltaTime : 1;
+      lastTime = timeStamp;
+      if (!ctx1 || !ctx2 || !ctx3) return;
+
+      ctx1.clearRect(0, 0, 60, 60);
+      ctx2.clearRect(0, 0, 60, 60);
+      ctx3.clearRect(0, 0, 60, 60);
+      target_3.draw(ctx3);
+      target_3.update(deltaTime);
+      target_1.draw(ctx1);
+      target_2.draw(ctx2);
+      target_1.update(deltaTime);
+      target_2.update(deltaTime);
+      requestAnimationFrame(animate);
+    }
+    animate();
+  }, []);
+
   return (
     <section className=" h-screen relative flex flex-col items-center justify-center">
       {isGameOver && (
@@ -79,26 +120,32 @@ const Game = (props: GameProps) => {
       )}
       <ul
         style={{ transform: `rotate(${angle}deg)` }}
-        className={`h-[11rem] w-[12rem] flex justify-between transition-transform duration-1000 origin-center`}
+        className={`h-[11rem] w-[12rem] flex justify-between  origin-center transition-transform duration-200`}
       >
-        <GameBtn
-          disabled={isGameOver}
-          name="A"
+        <canvas
+          ref={target1_ref}
+          className="self-start apply_btn_style"
           onClick={handleClick}
-          className="self-end apply_btn_style btn_bg"
-        />
-        <GameBtn
-          disabled={isGameOver}
-          name="B"
+          id="target_1"
+          width={60}
+          height={60}
+        ></canvas>
+        <canvas
+          ref={target2_ref}
+          className="self-end apply_btn_style"
           onClick={handleClick}
-          className="self-start apply_btn_style btn_bg"
-        />
-        <GameBtn
-          disabled={isGameOver}
-          name="C"
+          id="target_2"
+          width={60}
+          height={60}
+        ></canvas>
+        <canvas
+          ref={target3_ref}
+          className="self-start apply_btn_style"
           onClick={handleClick}
-          className="self-end apply_btn_style btn_bg"
-        />
+          id="target_3"
+          width={60}
+          height={60}
+        ></canvas>
       </ul>
       <div className="info mt-20">
         <h2>{}</h2>

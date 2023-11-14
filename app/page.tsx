@@ -11,7 +11,9 @@ export default function Home() {
         <button onClick={() => setIsLuck(false)}>sence</button>
       </nav>
       <h2 className="mt-5 text-2xl text-center">{isLuck ? "luck" : "sense"}</h2>
-      <Game type={isLuck ? "luck" : "sense"} />
+      {/* <Game type={isLuck ? "luck" : "sense"} /> */}
+      {/* <GameEngine /> */}
+      <Game type="luck" />
     </main>
   );
 }
