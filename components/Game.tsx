@@ -109,7 +109,7 @@ const Game = (props: GameProps) => {
   }, []);
 
   return (
-    <section className=" h-screen relative flex flex-col items-center justify-center">
+    <section className="h-full relative flex flex-col items-center justify-center">
       {isGameOver && (
         <div className="absolute top-0 z-10 backdrop-blur-sm bg-transparent  w-full h-full p-8">
           <div className="bg-black text-white w-fit m-auto p-5">
@@ -150,14 +150,10 @@ const Game = (props: GameProps) => {
           height={60}
         ></canvas>
       </ul>
-      <div className="info mt-20">
-        <h2>{}</h2>
-        <h2>LIVES {lives}</h2>
-        <h2>SCORE {score}</h2>
-        <button onClick={handleResetGame}>reset</button>
-        <h1 className={` ${isGameOver ? "opacity-100" : "opacity-0"}`}>
-          Game Over
-        </h1>
+      <div className="info text-white flex justify-evenly border w-full py-2 mt-20">
+        <span>LIVES {lives}</span>
+        <span>SCORE {score}</span>
+        <button onClick={handleResetGame}>RESET</button>
       </div>
     </section>
   );

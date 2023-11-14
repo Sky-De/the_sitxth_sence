@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 body {
-  background: rgba(149, 255, 0, 0);
+  background: rgba(0, 0, 0, 1);
 }
 .apply_btn_style {
-  @apply border min-w-[60px] w-[60px] max-h-[60px] h-[60px]  bg-gray-400 rounded-full;
+  @apply min-w-[60px] w-[60px] max-h-[60px] h-[60px]  bg-gray-400 rounded-full;
 }
 .apply_after::after {
   position: absolute;
