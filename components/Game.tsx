@@ -2,24 +2,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import { generateSecureRandom } from "@/hooks/useRandom";
 import Target from "./Target";
+import { TargetItem } from "./TargetItem";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
+import {
+  addScore,
+  removeLive,
+  resetGame,
+} from "@/redux/features/game/gameSlice";
+import { canvasSize } from "@/types/globals";
 
-type GameProps = {
-  type: "luck" | "sense";
-};
-
-const LivesInit: number = 3;
-const LivesStep: number = 1;
-const AngleStep: number = 60;
-const AngleInit: number = 0;
-const ScoreInit: number = 0;
-const ScoreStep: number = 1;
-
-const Game = (props: GameProps) => {
-  const [score, setScore] = useState<number>(ScoreInit);
-  const [count, setCount] = useState<number>(0);
-  const [lives, setLives] = useState<number>(LivesInit);
-  const [angle, setAngle] = useState<number>(AngleInit);
-  const [isGameOver, setIsGameOver] = useState<boolean>(false);
+const Game = () => {
+  const { angle, isGameOver, lives, score, type } = useAppSelector(
+    (state) => state.game
+  );
+  const dispatch = useAppDispatch();
   const target1_ref = useRef<HTMLCanvasElement | null>(null);
   const target2_ref = useRef<HTMLCanvasElement | null>(null);
   const target3_ref = useRef<HTMLCanvasElement | null>(null);
@@ -27,18 +23,12 @@ const Game = (props: GameProps) => {
   const handleResetGame = () => {
     const click = new Audio("./click.wav");
     click.play();
-    setAngle(AngleInit);
-    setLives(LivesInit);
-    setScore(ScoreInit);
-    setIsGameOver(false);
+    dispatch(resetGame());
   };
   const handleClick = (
     e: React.MouseEvent<HTMLCanvasElement | HTMLButtonElement>
   ) => {
-    console.log(props.type);
-
-    setCount(count + 1);
-    const random = generateSecureRandom(props.type);
+    const random = generateSecureRandom(type);
     console.log(random);
 
     if (
@@ -46,28 +36,17 @@ const Game = (props: GameProps) => {
       (e.currentTarget.id === "target_2" && random[1] === 1) ||
       (e.currentTarget.id === "target_3" && random[2] === 1)
     ) {
-      const correct = new Audio("./correct.wav");
-      correct.play();
-      setScore(score + ScoreStep);
-      setAngle(angle + AngleStep);
+      dispatch(addScore());
+      // const correct = new Audio("./correct.wav");
+      // correct.play();
     } else {
-      setAngle(angle - 60);
-      if (lives > 1) {
-        const incorrect = new Audio("./incorrect.wav");
-        incorrect.play();
-        setLives(lives - LivesStep);
-      } else {
-        const gameOver = new Audio("./game_over.wav");
-        gameOver.play();
-        setLives(0);
-        setIsGameOver(true);
-      }
+      dispatch(removeLive());
     }
   };
 
   useEffect(() => {
     handleResetGame();
-  }, [props.type]);
+  }, [type]);
 
   useEffect(() => {
     const target_3 = new Target({
@@ -93,9 +72,9 @@ const Game = (props: GameProps) => {
       lastTime = timeStamp;
       if (!ctx1 || !ctx2 || !ctx3) return;
 
-      ctx1.clearRect(0, 0, 60, 60);
-      ctx2.clearRect(0, 0, 60, 60);
-      ctx3.clearRect(0, 0, 60, 60);
+      ctx1.clearRect(0, 0, canvasSize, canvasSize);
+      ctx2.clearRect(0, 0, canvasSize, canvasSize);
+      ctx3.clearRect(0, 0, canvasSize, canvasSize);
       target_3.draw(ctx3);
       target_3.update(deltaTime);
       target_1.draw(ctx1);
@@ -109,52 +88,62 @@ const Game = (props: GameProps) => {
   }, []);
 
   return (
-    <section className="h-full relative flex flex-col items-center justify-center">
+    <section className="relative flex flex-col items-center justify-center gap-8">
       {isGameOver && (
         <div className="absolute top-0 z-10 backdrop-blur-sm bg-transparent  w-full h-full p-8">
-          <div className="bg-black text-white w-fit m-auto p-5">
+          <div className="bg-gray-950 text-white w-fit m-auto p-8">
             <h2>GameOver</h2>
             <p>Your score : {score}</p>
-            <button className="border w-full mt-4" onClick={handleResetGame}>
+            <button className=" border w-full mt-4 " onClick={handleResetGame}>
               reset
             </button>
           </div>
         </div>
       )}
+      <div className="title flex flex-col items-center mb-4">
+        <h2 className="mt-5 text-2xl text-center text-white">
+          {type === "LUCK" ? "LUCK" : "SIXTH SENSE"}
+        </h2>
+        <p className="text-gray-400 text-sm ">{`${
+          type === "LUCK"
+            ? "2 of 3 are correct choice"
+            : "1 of 3 is correct choice"
+        }`}</p>
+      </div>
+      <div className="info text-white flex justify-evenly  w-full py-2">
+        <span>LIVES : {lives}</span>
+        <span>SCORE : {score}</span>
+        <button onClick={handleResetGame}>RESET</button>
+      </div>
       <ul
         style={{ transform: `rotate(${angle}deg)` }}
-        className={`h-[11rem] w-[12rem] flex justify-between  origin-center transition-transform duration-200`}
+        className={`h-[15rem] w-[15rem] flex justify-between my-8 origin-center transition-transform duration-200`}
       >
         <canvas
           ref={target1_ref}
-          className="self-start apply_btn_style"
+          className="self-start mt-4 apply_btn_style"
           onClick={handleClick}
           id="target_1"
-          width={60}
-          height={60}
+          width={canvasSize}
+          height={canvasSize}
         ></canvas>
         <canvas
           ref={target2_ref}
           className="self-end apply_btn_style"
           onClick={handleClick}
           id="target_2"
-          width={60}
-          height={60}
+          width={canvasSize}
+          height={canvasSize}
         ></canvas>
         <canvas
           ref={target3_ref}
-          className="self-start apply_btn_style"
+          className="self-start mt-4 apply_btn_style"
           onClick={handleClick}
           id="target_3"
-          width={60}
-          height={60}
+          width={canvasSize}
+          height={canvasSize}
         ></canvas>
       </ul>
-      <div className="info text-white flex justify-evenly border w-full py-2 mt-20">
-        <span>LIVES {lives}</span>
-        <span>SCORE {score}</span>
-        <button onClick={handleResetGame}>RESET</button>
-      </div>
     </section>
   );
 };

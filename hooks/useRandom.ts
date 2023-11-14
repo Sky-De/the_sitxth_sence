@@ -1,6 +1,7 @@
 import { randomBytes } from "crypto";
 
-type GuessType = "luck" | "sense";
+// add globally
+type GuessType = "LUCK" | "SENSE";
 
 export function generateSecureRandom(type: GuessType): number[] {
   const shuffleArray = (array: number[]): number[] => {
@@ -30,9 +31,9 @@ export function generateSecureRandom(type: GuessType): number[] {
     return (randomValue % range) + min;
   };
 
-  if (type === "luck") {
+  if (type === "LUCK") {
     return shuffleArray([1, 1, 0]);
-  } else if (type === "sense") {
+  } else if (type === "SENSE") {
     return shuffleArray([0, 0, 1]);
   } else {
     throw new Error("Invalid type");
