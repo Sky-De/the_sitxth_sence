@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { generateSecureRandom } from "@/hooks/useRandom";
 import Target from "./Target";
-import { TargetItem } from "./TargetItem";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import {
   addScore,
@@ -29,7 +28,7 @@ const Game = () => {
     e: React.MouseEvent<HTMLCanvasElement | HTMLButtonElement>
   ) => {
     const random = generateSecureRandom(type);
-    console.log(random);
+    // console.log(random);
 
     if (
       (e.currentTarget.id === "target_1" && random[0] === 1) ||
@@ -37,9 +36,11 @@ const Game = () => {
       (e.currentTarget.id === "target_3" && random[2] === 1)
     ) {
       dispatch(addScore());
-      // const correct = new Audio("./correct.wav");
-      // correct.play();
+      const correct = new Audio("./correct.mp3");
+      correct.play();
     } else {
+      const incorrect = new Audio("./incorrect.mp3");
+      incorrect.play();
       dispatch(removeLive());
     }
   };
@@ -101,10 +102,7 @@ const Game = () => {
         </div>
       )}
       <div className="title flex flex-col items-center mb-4">
-        <h2 className="mt-5 text-2xl text-center text-white">
-          {type === "LUCK" ? "LUCK" : "SIXTH SENSE"}
-        </h2>
-        <p className="text-gray-400 text-sm ">{`${
+        <p className="text-gray-400 text-sm mt-4">{`${
           type === "LUCK"
             ? "2 of 3 are correct choice"
             : "1 of 3 is correct choice"

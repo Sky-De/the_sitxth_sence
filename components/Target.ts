@@ -28,8 +28,8 @@ export default class Target {
   private loadImage() {
     const imageLoader = new Image();
     if (this.type === "A") imageLoader.src = wave1.src;
-    if (this.type === "B") imageLoader.src = wave1.src;
-    if (this.type === "C") imageLoader.src = wave1.src;
+    if (this.type === "B") imageLoader.src = wave2.src;
+    if (this.type === "C") imageLoader.src = wave3.src;
 
     imageLoader.onload = () => {
       this.image = imageLoader;
@@ -37,7 +37,7 @@ export default class Target {
   }
 
   update(deltaTime: number) {
-    if (this.frameX > 22) return (this.frameX = 0);
+    if (this.frameX > 102) return (this.frameX = 0);
     this.frameX++;
   }
 

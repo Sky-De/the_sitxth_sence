@@ -1,13 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 body {
+  -webkit-tap-highlight-color: transparent;
   background: rgba(0, 0, 0, 1);
-}
-
-.main {
-  height: calc(100vh - 70px);
 }
 
 canvas {
@@ -31,7 +27,7 @@ canvas {
 }
 
 .btn_bg {
-  background-image: url("../public/wave.png");
+  // background-image: url("../public/wave.png");
   background-position-x: 0px;
   animation: bgWave 2s infinite ease;
 }
@@ -43,3 +39,6 @@ canvas {
 //     background-position-x: 1860px;
 //   }
 // }
+.bx {
+  color: wheat;
+}
