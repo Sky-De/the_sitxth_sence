@@ -33,7 +33,7 @@ export const LearnModel = () => {
     >
       <div
         onClick={handleContentClick}
-        className="model__content w-2/3 lg:w-1/3 h-5/6 bg-gray-800 overflow-y-scroll p-3"
+        className="model__content w-2/3 lg:w-1/3 h-fit bg-gray-800 p-3"
       >
         <div className="model__header flex items-center  justify-between">
           <h2># How to play</h2>

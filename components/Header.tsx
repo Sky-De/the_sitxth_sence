@@ -28,7 +28,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 px-4 h-[60px] bg-black flex items-center shadow-sm shadow-gray-500">
+    <header className="sticky top-0 px-4 h-[60px] bg-black flex items-center shadow-sm shadow-gray-500 z-10">
       <nav className="flex gap-6 text-white bg-black">
         <Link
           className={`${
