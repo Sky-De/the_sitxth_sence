@@ -5,6 +5,8 @@ import "./globals.scss";
 import { Provider } from "react-redux";
 import { store } from "@/redux/store/store";
 import { Header } from "@/components/Header";
+import { LearnModel } from "@/components/LearnModel";
+import { useAppSelector } from "@/hooks/reduxHooks";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +29,7 @@ export default function RootLayout({
         ></link>
       </head>
       <Provider store={store}>
-        <body className={inter.className}>
+        <body className={`${inter.className} h-screen relative`}>
           <Header />
           {children}
         </body>

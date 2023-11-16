@@ -42,3 +42,8 @@ canvas {
 .bx {
   color: wheat;
 }
+
+// no-scrollbar------------------------
+*::-webkit-scrollbar {
+  display: none;
+}

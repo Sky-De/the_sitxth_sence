@@ -109,7 +109,7 @@ const Game = () => {
         <button
           className={`${
             type === "LUCK" ? "font-bold opacity-100" : "opacity-50"
-          }`}
+          } text-xl`}
           onClick={() => dispatch(changeType("LUCK"))}
         >
           Luck
@@ -117,15 +117,20 @@ const Game = () => {
         <button
           className={`${
             type === "SENSE" ? "font-bold opacity-100" : "opacity-50"
-          }`}
+          } text-xl`}
           onClick={() => dispatch(changeType("SENSE"))}
         >
           Sence
         </button>
       </div>
-      <div className="info text-white flex justify-evenly  w-full py-2 items-center">
-        <span className="text-gray-400">LIVES : {lives}</span>
-        <span className="text-gray-400">SCORE : {score}</span>
+      <div className=" text-white flex justify-evenly  w-full py-2 items-center">
+        <div className="info flex flex-col gap-2">
+          <span className="text-gray-400">
+            Chance : {type === "LUCK" ? "66%" : "33%"}
+          </span>
+          <span className="text-gray-400">LIVES : {lives}</span>
+          <span className="text-gray-400">SCORE : {score}</span>
+        </div>
         <button className="border p-2" onClick={handleResetGame}>
           RESET
         </button>
