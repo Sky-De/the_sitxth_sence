@@ -1,13 +1,9 @@
-"use client";
-import Game from "@/components/Game";
-import { useAppSelector } from "@/hooks/reduxHooks";
-import { useState, useEffect } from "react";
+import HomePage from "@/components/Home";
 
 export default function Home() {
-  const { type } = useAppSelector((state) => state.game);
   return (
-    <main className="main">
-      <Game />
+    <main className="main text-white">
+      <HomePage />
     </main>
   );
 }

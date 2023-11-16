@@ -2,11 +2,12 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { changeType } from "@/redux/features/game/gameSlice";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export const Header = () => {
-  const dispatch = useAppDispatch();
-  const { type } = useAppSelector((state) => state.game);
+  const pathName = usePathname();
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [music, setMusic] = useState<HTMLAudioElement | null>(null);
 
@@ -43,22 +44,18 @@ export const Header = () => {
         <span className="text-white">Music</span>
       </div>
       <nav className="flex gap-6 text-white bg-black ml-auto">
-        <button
-          className={`${
-            type === "LUCK" ? "font-bold opacity-100" : "opacity-50"
-          }`}
-          onClick={() => dispatch(changeType("LUCK"))}
+        <Link
+          className={`${pathName === "/" ? "opacity-100" : "opacity-50"}`}
+          href="/"
         >
-          Luck
-        </button>
-        <button
-          className={`${
-            type === "SENSE" ? "font-bold opacity-100" : "opacity-50"
-          }`}
-          onClick={() => dispatch(changeType("SENSE"))}
+          Home
+        </Link>
+        <Link
+          className={`${pathName === "/game" ? "opacity-100" : "opacity-50"}`}
+          href="/game"
         >
-          Sence
-        </button>
+          Game
+        </Link>
       </nav>
     </header>
   );

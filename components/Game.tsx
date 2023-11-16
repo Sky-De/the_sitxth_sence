@@ -5,6 +5,7 @@ import Target from "./Target";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import {
   addScore,
+  changeType,
   removeLive,
   resetGame,
 } from "@/redux/features/game/gameSlice";
@@ -91,27 +92,43 @@ const Game = () => {
   return (
     <section className="relative flex flex-col items-center justify-center gap-8">
       {isGameOver && (
-        <div className="absolute top-0 z-10 backdrop-blur-sm bg-transparent  w-full h-full p-8">
-          <div className="bg-gray-950 text-white w-fit m-auto p-8">
-            <h2>GameOver</h2>
-            <p>Your score : {score}</p>
-            <button className=" border w-full mt-4 " onClick={handleResetGame}>
+        <div className="absolute top-0 z-10 backdrop-blur-sm bg-transparent  w-full h-full p-16">
+          <div className="bg-gray-950 text-white w-fit m-auto p-10 text-center">
+            <h2 className="font-bold text-red-400 text-2xl mb-4">GameOver</h2>
+            <p className="text-md mb-4">Your score : {score}</p>
+            <button
+              className=" border w-full mt-4 p-2"
+              onClick={handleResetGame}
+            >
               reset
             </button>
           </div>
         </div>
       )}
-      <div className="title flex flex-col items-center mb-4">
-        <p className="text-gray-400 text-sm mt-4">{`${
-          type === "LUCK"
-            ? "2 of 3 are correct choice"
-            : "1 of 3 is correct choice"
-        }`}</p>
+      <div className="typeSelect text-white  w-full flex justify-evenly p-4">
+        <button
+          className={`${
+            type === "LUCK" ? "font-bold opacity-100" : "opacity-50"
+          }`}
+          onClick={() => dispatch(changeType("LUCK"))}
+        >
+          Luck
+        </button>
+        <button
+          className={`${
+            type === "SENSE" ? "font-bold opacity-100" : "opacity-50"
+          }`}
+          onClick={() => dispatch(changeType("SENSE"))}
+        >
+          Sence
+        </button>
       </div>
-      <div className="info text-white flex justify-evenly  w-full py-2">
-        <span>LIVES : {lives}</span>
-        <span>SCORE : {score}</span>
-        <button onClick={handleResetGame}>RESET</button>
+      <div className="info text-white flex justify-evenly  w-full py-2 items-center">
+        <span className="text-gray-400">LIVES : {lives}</span>
+        <span className="text-gray-400">SCORE : {score}</span>
+        <button className="border p-2" onClick={handleResetGame}>
+          RESET
+        </button>
       </div>
       <ul
         style={{ transform: `rotate(${angle}deg)` }}
