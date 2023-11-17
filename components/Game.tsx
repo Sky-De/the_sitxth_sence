@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { generateSecureRandom } from "@/hooks/useRandom";
 import Target from "./Target";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
@@ -10,38 +10,41 @@ import {
   resetGame,
 } from "@/redux/features/game/gameSlice";
 import { canvasSize } from "@/types/globals";
+import { PlaySound } from "@/hooks/playSound";
 
 const Game = () => {
   const { angle, isGameOver, lives, score, type } = useAppSelector(
     (state) => state.game
   );
   const dispatch = useAppDispatch();
+
+  // target refs
   const target1_ref = useRef<HTMLCanvasElement | null>(null);
   const target2_ref = useRef<HTMLCanvasElement | null>(null);
   const target3_ref = useRef<HTMLCanvasElement | null>(null);
 
+  // audio refs
+  const correctAudioRef = useRef<HTMLAudioElement | null>(null);
+  const incorrectAudioRef = useRef<HTMLAudioElement | null>(null);
+  const clickAudioRef = useRef<HTMLAudioElement | null>(null);
+
   const handleResetGame = () => {
-    const click = new Audio("./click.wav");
-    click.play();
+    PlaySound({ elmRef: clickAudioRef });
     dispatch(resetGame());
   };
   const handleClick = (
     e: React.MouseEvent<HTMLCanvasElement | HTMLButtonElement>
   ) => {
     const random = generateSecureRandom(type);
-    // console.log(random);
-
     if (
       (e.currentTarget.id === "target_1" && random[0] === 1) ||
       (e.currentTarget.id === "target_2" && random[1] === 1) ||
       (e.currentTarget.id === "target_3" && random[2] === 1)
     ) {
       dispatch(addScore());
-      const correct = new Audio("./correct.mp3");
-      correct.play();
+      PlaySound({ elmRef: correctAudioRef });
     } else {
-      const incorrect = new Audio("./incorrect.mp3");
-      incorrect.play();
+      PlaySound({ elmRef: incorrectAudioRef });
       dispatch(removeLive());
     }
   };
@@ -91,6 +94,20 @@ const Game = () => {
 
   return (
     <section className="relative flex flex-col items-center justify-center gap-8">
+      {/* AUDIO---------------------------------- */}
+      <audio className="hidden" ref={correctAudioRef}>
+        <source src="./correct.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+      <audio className="hidden" ref={incorrectAudioRef}>
+        <source src="./incorrect.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+      <audio className="hidden" ref={clickAudioRef}>
+        <source src="./click.wav" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+      {/* GAME OVER ALERT---------------------------------- */}
       {isGameOver && (
         <div className="absolute top-0 z-10 backdrop-blur-sm bg-transparent  w-full h-full p-16">
           <div className="bg-gray-950 text-white w-fit m-auto p-10 text-center">
@@ -105,6 +122,7 @@ const Game = () => {
           </div>
         </div>
       )}
+      {/* TYPE OF GAME-------------------------------------------------------------- */}
       <div className="typeSelect text-white  w-full flex justify-evenly p-4">
         <button
           className={`${
@@ -123,6 +141,7 @@ const Game = () => {
           Sence
         </button>
       </div>
+      {/*GAME INFO-------------------------------------------------------------- */}
       <div className=" text-white flex justify-evenly  w-full py-2 items-center">
         <div className="info flex flex-col gap-2">
           <span className="text-gray-400">
@@ -135,6 +154,7 @@ const Game = () => {
           RESET
         </button>
       </div>
+      {/*GAME TARGETS-------------------------------------------------------------- */}
       <ul
         style={{ transform: `rotate(${angle}deg)` }}
         className={`h-[15rem] w-[15rem] flex justify-between my-8 origin-center transition-transform duration-200`}

@@ -33,9 +33,9 @@ export const LearnModel = () => {
     >
       <div
         onClick={handleContentClick}
-        className="model__content w-2/3 lg:w-1/3 h-fit bg-gray-800 p-3"
+        className="model__content w-2/3 lg:w-1/3 h-fit bg-[#1F3A3D] p-4"
       >
-        <div className="model__header flex items-center  justify-between">
+        <div className="model__header flex items-center  justify-between pb-4 border-b">
           <h2># How to play</h2>
           <button onClick={handleCloseCleanModel} className="border px-2">
             X
