@@ -8,6 +8,7 @@ export const PlaySound = ({ elmRef }: PlaySoundProps) => {
       sound.pause();
       sound.currentTime = 0;
     }
+    sound.volume = 0.04;
     sound.play();
   }
 };

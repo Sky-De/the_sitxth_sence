@@ -29,7 +29,7 @@ export const LearnModel = () => {
   return (
     <section
       onClick={handleCloseModel}
-      className="model absolute top-0 w-full h-full flex justify-center items-center bg-transparent backdrop-blur-xl"
+      className="model z-20 absolute top-0 w-full h-full flex justify-center items-center bg-transparent backdrop-blur-xl"
     >
       <div
         onClick={handleContentClick}

@@ -86,7 +86,6 @@ const Game = () => {
       target_2.draw(ctx2);
       target_1.update(deltaTime);
       target_2.update(deltaTime);
-      // requestAnimationFrame(animate);
       requestAnimationFrame(animate);
     }
     animate(requestAnimationFrame((timeStamp) => timeStamp));

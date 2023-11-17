@@ -47,3 +47,9 @@ canvas {
 *::-webkit-scrollbar {
   display: none;
 }
+
+// contact
+
+.apply__contact--link {
+  @apply text-5xl md:text-7xl transition-transform duration-700;
+}
