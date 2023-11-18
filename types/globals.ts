@@ -1,3 +1,15 @@
+import { CanvasHTMLAttributes } from "react";
+
+export type GameType = "LUCK" | "SENSE";
+
+export type MyEventType = React.MouseEvent<
+  HTMLButtonElement | HTMLDivElement,
+  MouseEvent
+>;
+
+export type TargetItemProps = CanvasHTMLAttributes<HTMLCanvasElement> &
+  React.RefAttributes<HTMLCanvasElement>;
+
 export const canvasSize: number = 80;
 
 export const HomePageItems = [

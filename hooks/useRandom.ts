@@ -1,9 +1,9 @@
+import { GameType } from "@/types/globals";
 import { randomBytes } from "crypto";
 
 // add globally
-type GuessType = "LUCK" | "SENSE";
 
-export function generateSecureRandom(type: GuessType): number[] {
+export function generateSecureRandom(type: GameType): number[] {
   const shuffleArray = (array: number[]): number[] => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(randomNumberBetween(0, i + 1));

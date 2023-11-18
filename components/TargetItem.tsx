@@ -1,8 +1,6 @@
-import React, { FC, CanvasHTMLAttributes } from "react";
+import { TargetItemProps } from "@/types/globals";
+import React, { FC } from "react";
 
-export const TargetItem: FC<
-  CanvasHTMLAttributes<HTMLCanvasElement> &
-    React.RefAttributes<HTMLCanvasElement>
-> = (props) => {
+export const TargetItem: FC<TargetItemProps> = (props) => {
   return <canvas {...props}></canvas>;
 };

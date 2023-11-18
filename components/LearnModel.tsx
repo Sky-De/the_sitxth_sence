@@ -1,5 +1,5 @@
 "use client";
-import { HomePageItems } from "@/types/globals";
+import { HomePageItems, MyEventType } from "@/types/globals";
 import { HomeItem } from "./HomeItem";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { closeModel, setAsWatched } from "@/redux/features/models/learnSlice";
@@ -7,21 +7,15 @@ import { closeModel, setAsWatched } from "@/redux/features/models/learnSlice";
 export const LearnModel = () => {
   const dispatch = useAppDispatch();
 
-  const handleCloseModel = (
-    e: React.MouseEvent<HTMLButtonElement | HTMLDivElement, MouseEvent>
-  ) => {
+  const handleCloseModel = (e: MyEventType) => {
     dispatch(closeModel());
   };
 
-  const handleContentClick = (
-    e: React.MouseEvent<HTMLButtonElement | HTMLDivElement, MouseEvent>
-  ) => {
+  const handleContentClick = (e: MyEventType) => {
     e.stopPropagation();
   };
 
-  const handleCloseCleanModel = (
-    e: React.MouseEvent<HTMLButtonElement | HTMLDivElement, MouseEvent>
-  ) => {
+  const handleCloseCleanModel = (e: MyEventType) => {
     e.stopPropagation();
     dispatch(setAsWatched());
   };
