@@ -126,7 +126,7 @@ const Game = () => {
         <button
           className={`${
             type === "LUCK" ? "font-bold opacity-100" : "opacity-50"
-          } text-xl border p-2`}
+          } text-xl border p-2 rounded-md`}
           onClick={() => dispatch(changeType("LUCK"))}
         >
           Luck
@@ -134,12 +134,12 @@ const Game = () => {
         <button
           className={`${
             type === "SENSE" ? "font-bold opacity-100" : "opacity-50"
-          } text-xl border p-2`}
+          } text-xl border p-2 rounded-md`}
           onClick={() => dispatch(changeType("SENSE"))}
         >
           Sence
         </button>
-        <button className="border p-2" onClick={handleResetGame}>
+        <button className="border p-2 rounded-md" onClick={handleResetGame}>
           RESET
         </button>
       </div>

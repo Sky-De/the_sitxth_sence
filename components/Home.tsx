@@ -17,12 +17,12 @@ const HomePage = () => {
       </p>
       <div className="flex flex-col items-center w-fit justify-evenly md:justify-center md:gap-4  mx-auto p-4">
         <div className="actions w-full flex gap-8">
-          <Link href="/game" className="border p-4 hover:opacity-50">
+          <Link href="/game" className="border p-4 hover:opacity-50 rounded-lg">
             Play Now
           </Link>
           <button
             onClick={() => dispatch(openModel())}
-            className="border p-4 hover:opacity-50"
+            className="border p-4 hover:opacity-50 rounded-lg"
           >
             Learn
           </button>
