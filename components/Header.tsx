@@ -25,7 +25,7 @@ export const Header = () => {
         music.currentTime = 0;
         setIsPlaying(true);
         music.play();
-        music.volume = 0.1;
+        music.volume = 0.2;
         music.loop = true;
         //  here i want some thing to make this music infinit  repeat until user again click
       }
