@@ -122,7 +122,7 @@ const Game = () => {
         </div>
       )}
       {/* TYPE OF GAME-------------------------------------------------------------- */}
-      <div className="typeSelect text-white  w-full flex justify-evenly mt-8">
+      <div className="typeSelect text-white w-full flex justify-evenly md:justify-center md:gap-8 mt-8">
         <button
           className={`${
             type === "LUCK" ? "font-bold opacity-100" : "opacity-50"
