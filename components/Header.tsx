@@ -60,7 +60,10 @@ export const Header = () => {
         </Link>
       </nav>
       {pathName === "/game" && (
-        <div onClick={handleMusic} className="flex items-center gap-2 ml-auto">
+        <div
+          onClick={handleMusic}
+          className="flex items-center gap-2 ml-auto cursor-pointer"
+        >
           <Image
             width={25}
             height={25}

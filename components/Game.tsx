@@ -13,7 +13,7 @@ import { canvasSize } from "@/types/globals";
 import { PlaySound } from "@/hooks/playSound";
 
 const Game = () => {
-  const { angle, isGameOver, lives, score, type } = useAppSelector(
+  const { angle, isGameOver, lives, score, type, highScore } = useAppSelector(
     (state) => state.game
   );
   const dispatch = useAppDispatch();
@@ -32,17 +32,18 @@ const Game = () => {
     PlaySound({ elmRef: clickAudioRef });
     dispatch(resetGame());
   };
-  const handleClick = (
+  const handleTargetClick = (
     e: React.MouseEvent<HTMLCanvasElement | HTMLButtonElement>
   ) => {
-    const random = generateSecureRandom(type);
+    if (isGameOver) return;
+    const randomArray = generateSecureRandom(type);
     if (
-      (e.currentTarget.id === "target_1" && random[0] === 1) ||
-      (e.currentTarget.id === "target_2" && random[1] === 1) ||
-      (e.currentTarget.id === "target_3" && random[2] === 1)
+      (e.currentTarget.id === "target_1" && randomArray[0] === 1) ||
+      (e.currentTarget.id === "target_2" && randomArray[1] === 1) ||
+      (e.currentTarget.id === "target_3" && randomArray[2] === 1)
     ) {
-      dispatch(addScore());
       PlaySound({ elmRef: correctAudioRef });
+      dispatch(addScore());
     } else {
       PlaySound({ elmRef: incorrectAudioRef });
       dispatch(removeLive());
@@ -55,21 +56,21 @@ const Game = () => {
 
   useEffect(() => {
     const target_3 = new Target({
-      canvas: document.getElementById("target_3"),
-      type: "C",
-    });
-    const target_1 = new Target({
       canvas: document.getElementById("target_1"),
       type: "A",
     });
-    const target_2 = new Target({
+    const target_1 = new Target({
       canvas: document.getElementById("target_2"),
       type: "B",
     });
+    const target_2 = new Target({
+      canvas: document.getElementById("target_3"),
+      type: "C",
+    });
 
-    const ctx3 = (target1_ref.current as HTMLCanvasElement).getContext("2d");
-    const ctx1 = (target2_ref.current as HTMLCanvasElement).getContext("2d");
-    const ctx2 = (target3_ref.current as HTMLCanvasElement).getContext("2d");
+    const ctx1 = (target1_ref.current as HTMLCanvasElement).getContext("2d");
+    const ctx2 = (target2_ref.current as HTMLCanvasElement).getContext("2d");
+    const ctx3 = (target3_ref.current as HTMLCanvasElement).getContext("2d");
     let lastTime = 0;
     function animate(timeStamp: number) {
       let deltaTime = timeStamp - lastTime;
@@ -80,12 +81,12 @@ const Game = () => {
       ctx1.clearRect(0, 0, canvasSize, canvasSize);
       ctx2.clearRect(0, 0, canvasSize, canvasSize);
       ctx3.clearRect(0, 0, canvasSize, canvasSize);
-      target_3.draw(ctx3);
-      target_3.update(deltaTime);
       target_1.draw(ctx1);
       target_2.draw(ctx2);
+      target_3.draw(ctx3);
       target_1.update(deltaTime);
       target_2.update(deltaTime);
+      target_3.update(deltaTime);
       requestAnimationFrame(animate);
     }
     animate(requestAnimationFrame((timeStamp) => timeStamp));
@@ -113,7 +114,7 @@ const Game = () => {
             <h2 className="font-bold text-red-400 text-2xl mb-4">GameOver</h2>
             <p className="text-md mb-4">Your score : {score}</p>
             <button
-              className=" border w-full mt-4 p-2"
+              className="border w-full mt-4 p-2"
               onClick={handleResetGame}
             >
               reset
@@ -139,18 +140,34 @@ const Game = () => {
         >
           Sence
         </button>
-        <button className="border p-2 rounded-md" onClick={handleResetGame}>
+        <div className="border flex justify-center items-center rounded-full"></div>
+        <button
+          className=" p-2 rounded-md text-resetBtn hover:opacity-60"
+          onClick={handleResetGame}
+        >
           RESET
         </button>
       </div>
       {/*GAME INFO-------------------------------------------------------------- */}
       <div className=" text-white flex justify-evenly  w-full items-center">
-        <div className="info flex  gap-8">
+        <div className="info flex  gap-8 flex-wrap justify-center">
           <span className="text-gray-400">
             Chance : {type === "LUCK" ? "66%" : "33%"}
           </span>
-          <span className="text-gray-400">LIVES : {lives}</span>
-          <span className="text-gray-400">SCORE : {score}</span>
+          <span className="text-gray-400">
+            H-Score : <span className="opacity-0">s</span>
+            <span className="text-white">
+              {type === "LUCK" ? highScore?.luck : highScore?.sense}
+            </span>
+          </span>
+          <span className="text-gray-400">
+            Score : <span className="opacity-0">s</span>
+            <span className="text-white">{score}</span>
+          </span>
+          <span className="text-gray-400">
+            Lives : <span className="opacity-0">s</span>
+            <span className="text-white">{lives}</span>
+          </span>
         </div>
       </div>
       {/*GAME TARGETS-------------------------------------------------------------- */}
@@ -161,7 +178,7 @@ const Game = () => {
         <canvas
           ref={target1_ref}
           className="self-start mt-4 apply_btn_style"
-          onClick={handleClick}
+          onClick={handleTargetClick}
           id="target_1"
           width={canvasSize}
           height={canvasSize}
@@ -169,7 +186,7 @@ const Game = () => {
         <canvas
           ref={target2_ref}
           className="self-end apply_btn_style"
-          onClick={handleClick}
+          onClick={handleTargetClick}
           id="target_2"
           width={canvasSize}
           height={canvasSize}
@@ -177,7 +194,7 @@ const Game = () => {
         <canvas
           ref={target3_ref}
           className="self-start mt-4 apply_btn_style"
-          onClick={handleClick}
+          onClick={handleTargetClick}
           id="target_3"
           width={canvasSize}
           height={canvasSize}
