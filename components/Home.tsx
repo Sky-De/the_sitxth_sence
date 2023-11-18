@@ -9,7 +9,7 @@ const HomePage = () => {
   const dispatch = useAppDispatch();
   return (
     <section className="flex flex-col items-center gap-4 py-8">
-      <Image width={300} height={300} src={Cover} alt="trial" />
+      <Image loading="eager" width={300} height={300} src={Cover} alt="trial" />
       <h1 className="text-3xl text-center w-2/3 font-bold">The Sixth Sense</h1>
       <p className="text-center md:w-1/3 px-2">
         {` Want to test your sixth sense or luck in a simple fun game? Click "Learn" to check
