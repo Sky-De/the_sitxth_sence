@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.scss";
-import { store } from "@/redux/store/store";
 import { Header } from "@/components/Header";
 import ReduxProvider from "@/redux/provider";
+import "./globals.scss";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "2D Game",
+  title: "Free Game",
   description: "Free 2D guess game,developed by SkyDe",
 };
 
