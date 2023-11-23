@@ -148,6 +148,14 @@ const Game = () => {
           RESET
         </button>
       </div>
+
+      {/*GAME TIP-------------------------------------------------------------- */}
+      <p className=" text-gray-400">
+        <span className="md:hidden">Tap</span>
+        <span className="hidden md:inline">Click</span> on one of these circles
+        this is completly RANDOM on each choice{" "}
+      </p>
+
       {/*GAME INFO-------------------------------------------------------------- */}
       <div className=" text-white flex justify-evenly  w-full items-center">
         <div className="info flex  gap-8 flex-wrap justify-center">
