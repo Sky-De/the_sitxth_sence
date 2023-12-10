@@ -53,3 +53,10 @@ canvas {
 .apply__contact--link {
   @apply text-5xl md:text-7xl transition-transform duration-700;
 }
+
+// ----------------
+@media (hover: hover) {
+  .resetBtn:hover {
+    opacity: 0.5;
+  }
+}

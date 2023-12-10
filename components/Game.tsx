@@ -142,7 +142,7 @@ const Game = () => {
         </button>
         <div className="border flex justify-center items-center rounded-full"></div>
         <button
-          className=" p-2 rounded-md text-resetBtn hover:opacity-60"
+          className=" p-2 rounded-md text-resetBtn resetBtn"
           onClick={handleResetGame}
         >
           RESET
@@ -150,17 +150,17 @@ const Game = () => {
       </div>
 
       {/*GAME TIP-------------------------------------------------------------- */}
-      <p className=" text-gray-400">
+      <p className=" text-gray-400 max-w-[90%] md:max-w-[50%] text-center border-b pb-4 md:pb-8">
         <span className="md:hidden">Tap</span>
-        <span className="hidden md:inline">Click</span> on one of these circles
-        this is completly RANDOM on each choice{" "}
+        <span className="hidden md:inline">Click</span> on one of circles below,
+        this is completly RANDOM on each choice live{" "}
       </p>
 
       {/*GAME INFO-------------------------------------------------------------- */}
       <div className=" text-white flex justify-evenly  w-full items-center">
         <div className="info flex  gap-8 flex-wrap justify-center">
           <span className="text-gray-400">
-            Chance : {type === "LUCK" ? "66%" : "33%"}
+            Chance ~ : {type === "LUCK" ? "66%" : "33%"}
           </span>
           <span className="text-gray-400">
             H-Score : <span className="opacity-0">s</span>
