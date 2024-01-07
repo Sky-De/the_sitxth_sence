@@ -45,14 +45,3 @@ export const HomePageItems = [
     ],
   },
 ];
-
-// local storage high score
-export const highScoreLuck =
-  typeof window !== "undefined" && localStorage.getItem("highScoreLuck")
-    ? Number(localStorage.getItem("highScoreLuck") || 0)
-    : 0;
-
-export const highScoreSense =
-  typeof window !== "undefined" && localStorage.getItem("highScoreSense")
-    ? Number(localStorage.getItem("highScoreSense") || 0)
-    : 0;

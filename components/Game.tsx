@@ -8,9 +8,11 @@ import {
   changeType,
   removeLive,
   resetGame,
+  setCurrentHs,
 } from "@/redux/features/game/gameSlice";
 import { canvasSize } from "@/types/globals";
 import { PlaySound } from "@/hooks/playSound";
+import { useGetAndSetStorage } from "@/hooks/useGetStorage";
 
 const Game = () => {
   const { angle, isGameOver, lives, score, type, highScore } = useAppSelector(
@@ -53,6 +55,9 @@ const Game = () => {
   useEffect(() => {
     handleResetGame();
   }, [type]);
+
+  // checks for highscores in localStorage and sets them
+  useGetAndSetStorage();
 
   useEffect(() => {
     const target_3 = new Target({

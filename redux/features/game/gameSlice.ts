@@ -1,4 +1,3 @@
-import { highScoreLuck, highScoreSense } from "@/types/globals";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const LivesInit: number = 3;
@@ -19,7 +18,10 @@ type GameState = {
 };
 
 type ChangeTypeAction = "LUCK" | "SENSE";
-type HighScoreType = number;
+type SetHSTypeAction = {
+  luckHS: number;
+  senseHS: number;
+};
 
 const GameInitialState: GameState = {
   type: "LUCK",
@@ -28,8 +30,8 @@ const GameInitialState: GameState = {
   isGameOver: false,
   angle: AngleInit,
   highScore: {
-    luck: highScoreLuck, // Initialize luck score from local storage or 0 - /types/global.ts
-    sense: highScoreSense, // Initialize sense score from local storage or 0 - /types/global.ts
+    luck: 0, // Initialize luck score from local storage or 0 - /types/global.ts
+    sense: 0, // Initialize sense score from local storage or 0 - /types/global.ts
   },
 };
 
@@ -47,6 +49,10 @@ const gameSlice = createSlice({
       state.angle += AngleStep;
       state.score++;
     },
+    setCurrentHs(state, action: PayloadAction<SetHSTypeAction>) {
+      state.highScore.luck = action.payload.luckHS;
+      state.highScore.sense = action.payload.senseHS;
+    },
     removeLive(state) {
       state.angle -= AngleStep;
       if (state.lives > 1) state.lives--;
@@ -54,9 +60,11 @@ const gameSlice = createSlice({
         state.isGameOver = true;
         if (state.type === "LUCK" && state.score > state.highScore.luck) {
           state.highScore.luck = state.score;
+          localStorage.setItem("highScoreLuck", JSON.stringify(state.score));
         }
         if (state.type === "SENSE" && state.score > state.highScore.sense) {
           state.highScore.sense = state.score;
+          localStorage.setItem("highScoreSense", JSON.stringify(state.score));
         }
       }
     },
@@ -66,6 +74,6 @@ const gameSlice = createSlice({
   },
 });
 
-export const { resetGame, addScore, changeType, removeLive } =
+export const { resetGame, addScore, changeType, removeLive, setCurrentHs } =
   gameSlice.actions;
 export default gameSlice.reducer;
