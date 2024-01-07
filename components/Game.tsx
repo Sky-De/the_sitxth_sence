@@ -158,7 +158,7 @@ const Game = () => {
       <p className=" text-gray-400 max-w-[90%] md:max-w-[50%] text-center border-b pb-4 md:pb-8">
         <span className="md:hidden">Tap</span>
         <span className="hidden md:inline">Click</span> on one of circles below,
-        this is completly RANDOM on each choice live{" "}
+        this is completly RANDOM on each choice.
       </p>
 
       {/*GAME INFO-------------------------------------------------------------- */}
